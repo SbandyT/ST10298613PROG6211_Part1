@@ -10,120 +10,131 @@ using System.Threading.Tasks;
 
 namespace ArrayPractice
 {
- 
-    class Recipe
+
+    public class Recipe
     {
-        private string[] ingredients;
-        private double[] quantities;
-        private string[] units;
-        private string[] steps;
+        // Properties
+        public string Name { get; set; } // Name of the recipe
+        public List<Ingredient> Ingredients { get; set; } // List of ingredients
+        public List<string> Steps { get; set; } // List of preparation steps
+        public double TotalCalories { get; private set; } // Total calories in the recipe
+        private List<Ingredient> OriginalIngredients { get; set; } // Original ingredients for resetting
 
-        // Method to enter recipe details
-        public void EnterRecipeDetails()
+        // Delegate and event for calories exceeded
+        public delegate void CaloriesExceededEventHandler(string recipeName);
+        public event CaloriesExceededEventHandler CaloriesExceeded;
+
+        // Constructor
+        public Recipe(string name)
         {
-            Console.Write("Enter the number of ingredients: ");
-            int numOfIngredients = Convert.ToInt32(Console.ReadLine());
+            Name = name;
+            Ingredients = new List<Ingredient>();
+            Steps = new List<string>();
+        }
 
-            // Initialize arrays based on the number of ingredients entered
-            ingredients = new string[numOfIngredients];
-            quantities = new double[numOfIngredients];
-            units = new string[numOfIngredients];
+        // ----------------------------------------
+        // Method to add ingredient
+        public void AddIngredient(string name, double quantity, string unit, int calories, string foodGroup)
+        {
+            Ingredient ingredient = new Ingredient(name, quantity, unit, calories, foodGroup);
+            Ingredients.Add(ingredient);
+            OriginalIngredients = Ingredients.Select(ing => ing.Clone()).ToList();
+            CalculateTotalCalories();
+        }
 
-            // Loop to input details for each ingredient
-            for (int i = 0; i < numOfIngredients; i++)
+        // ----------------------------------------
+        // Method to add step
+        public void AddStep(string step)
+        {
+            Steps.Add(step);
+        }
+
+        // ----------------------------------------
+        // Method to calculate total calories
+        private void CalculateTotalCalories()
+        {
+            TotalCalories = Ingredients.Sum(ing => ing.Calories * ing.Quantity);
+            if (TotalCalories > 300)
             {
-                Console.Write($"Enter the name of ingredient {i + 1}: ");
-                ingredients[i] = Console.ReadLine();
-
-                Console.Write($"Enter the quantity of {ingredients[i]}: ");
-                quantities[i] = Convert.ToDouble(Console.ReadLine());
-
-                Console.Write($"Enter the unit of measurement for {ingredients[i]}: ");
-                units[i] = Console.ReadLine();
-            }
-
-            Console.Write("Enter the number of steps: ");
-            int numOfSteps = Convert.ToInt32(Console.ReadLine());
-
-            // Initialize array for steps based on the number entered
-            steps = new string[numOfSteps];
-            // Loop to input preparation steps
-            for (int i = 0; i < numOfSteps; i++)
-            {
-                Console.Write($"Enter step {i + 1}: ");
-                steps[i] = Console.ReadLine();
+                CaloriesExceeded?.Invoke(Name);
             }
         }
+
+        // ----------------------------------------
         // Method to display the recipe
         public void DisplayRecipe()
         {
-            // Check if recipe details are entered
-            if (ingredients == null || steps == null)
-            {
-                Console.WriteLine("Recipe details are not entered yet.");
-                return;
-            }
-
-            // Display ingredients and quantities
-            Console.WriteLine("\nRecipe:");
+            Console.WriteLine($"\nRecipe: {Name}");
             Console.WriteLine("Ingredients:");
-            for (int i = 0; i < ingredients.Length; i++)
+            foreach (var ingredient in Ingredients)
             {
-                Console.WriteLine($"{ingredients[i]} - {quantities[i]} {units[i]}");
+                Console.WriteLine($"{ingredient.Name} - {ingredient.Quantity} {ingredient.Unit} - {ingredient.Calories} calories - {ingredient.FoodGroup}");
             }
-
-            // Display preparation steps
             Console.WriteLine("\nSteps:");
-            for (int i = 0; i < steps.Length; i++)
+            for (int i = 0; i < Steps.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {steps[i]}");
+                Console.WriteLine($"{i + 1}. {Steps[i]}");
             }
+            Console.WriteLine($"Total Calories: {TotalCalories}");
         }
 
-        // Method to scale the recipe by a given factor
+        // ----------------------------------------
+        // Method to scale recipe
         public void ScaleRecipe(double factor)
         {
-            // Check if recipe details are entered
-            if (quantities == null)
+            foreach (var ingredient in Ingredients)
             {
-                Console.WriteLine("Recipe details are not entered yet.");
-                return;
+                ingredient.Quantity *= factor;
             }
-
-            // Scale quantities of ingredients
-            for (int i = 0; i < quantities.Length; i++)
-            {
-                quantities[i] *= factor;
-            }
-
-            Console.WriteLine("\nRecipe scaled successfully.");
-            DisplayRecipe();
+            CalculateTotalCalories();
         }
 
-        // Method to reset ingredient quantities to original values
+        // ----------------------------------------
+        // Method to reset quantities
         public void ResetQuantities()
         {
-            // Check if recipe details are entered
-            if (quantities == null)
-            {
-                Console.WriteLine("Recipe details are not entered yet.");
-                return;
-            }
-
-            Console.WriteLine("\nQuantities reset to original values.");
-            DisplayRecipe();
+            Ingredients = OriginalIngredients.Select(ing => ing.Clone()).ToList();
+            CalculateTotalCalories();
         }
 
-        // Method to clear all recipe data
+        // ----------------------------------------
+        // Method to clear the recipe
         public void ClearRecipe()
         {
-            ingredients = null;
-            quantities = null;
-            units = null;
-            steps = null;
-            Console.WriteLine("\nRecipe details cleared.");
+            Ingredients.Clear();
+            Steps.Clear();
+            TotalCalories = 0;
+        }
+    }
+
+    // ----------------------------------------
+    // Ingredient class
+    public class Ingredient
+    {
+        // Properties
+        public string Name { get; set; }
+        public double Quantity { get; set; }
+        public string Unit { get; set; }
+        public int Calories { get; set; }
+        public string FoodGroup { get; set; }
+
+        // Constructor
+        public Ingredient(string name, double quantity, string unit, int calories, string foodGroup)
+        {
+            Name = name;
+            Quantity = quantity;
+            Unit = unit;
+            Calories = calories;
+            FoodGroup = foodGroup;
+        }
+
+        // ----------------------------------------
+        // Clone method for creating a copy of the ingredient
+        public Ingredient Clone()
+        {
+            return new Ingredient(Name, Quantity, Unit, Calories, FoodGroup);
         }
     }
 }
-
+// *******88**************88*********END*******88******88****88****************************
 
