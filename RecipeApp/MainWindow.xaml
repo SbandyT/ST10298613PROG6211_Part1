@@ -1,12 +1,65 @@
 ﻿<Window x:Class="RecipeApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RecipeApp"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:vm="clr-namespace:RecipeApp.ViewModels"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        Title="Recipe Manager" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:BaseViewModel/>
+    </Window.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
 
+        <!-- Recipe List Section -->
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="10">
+            <TextBlock Text="Recipes" FontWeight="Bold" FontSize="16"/>
+            <ListBox ItemsSource="{Binding Recipes}" SelectedItem="{Binding SelectedRecipe}" DisplayMemberPath="Name" Margin="0,10,0,10"/>
+            <Button Content="Add Recipe" Command="{Binding AddRecipeCommand}" Margin="0,5,0,0"/>
+            <Button Content="Remove Recipe" Command="{Binding RemoveRecipeCommand}" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- Recipe Details Section -->
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10">
+            <TextBlock Text="Recipe Details" FontWeight="Bold" FontSize="16"/>
+            <TextBox Text="{Binding SelectedRecipe.Name, Mode=TwoWay}" Margin="0,10,0,10" ToolTip="Recipe Name"/>
+            <TextBlock Text="Ingredients" FontWeight="Bold" FontSize="14"/>
+            <ListBox ItemsSource="{Binding SelectedRecipe.Ingredients}" Margin="0,5,0,10">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding Path=Name, Mode=TwoWay}" Width="100" Margin="0,0,5,0"/>
+                            <TextBox Text="{Binding Path=Quantity, Mode=TwoWay}" Width="50" Margin="0,0,5,0"/>
+                            <TextBox Text="{Binding Path=Unit, Mode=TwoWay}" Width="50" Margin="0,0,5,0"/>
+                            <TextBox Text="{Binding Path=Calories, Mode=TwoWay}" Width="50" Margin="0,0,5,0"/>
+                            <TextBox Text="{Binding Path=FoodGroup, Mode=TwoWay}" Width="100" Margin="0,0,5,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <TextBlock Text="Steps" FontWeight="Bold" FontSize="14"/>
+            <ListBox ItemsSource="{Binding SelectedRecipe.Steps}" Margin="0,5,0,10">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox/>
+                            <TextBox Text="{Binding Path=.}" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+
+        <!-- Pie Chart Section -->
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10">
+            <oxy:PlotView Model="{Binding FoodGroupPieModel}" Height="200"/>
+        </StackPanel>
     </Grid>
 </Window>
