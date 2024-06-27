@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeAppTestUnits", "Recip
 		{D6D6634E-4BA3-41A3-8CF8-79A3FB99C3EB} = {D6D6634E-4BA3-41A3-8CF8-79A3FB99C3EB}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeApp", "RecipeApp\RecipeApp.csproj", "{60341C47-180E-440C-9CE7-54F9A5283D0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POE", "RecipeApp\POE.csproj", "{60341C47-180E-440C-9CE7-54F9A5283D0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
