@@ -1,30 +1,47 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace RecipeApp.Models
 {
-    public class Recipe
+    public class Recipe : INotifyPropertyChanged
     {
-        // Property for recipe name
-        public string Name { get; set; }
+        private string _name;
+        private ObservableCollection<Ingredient> _ingredients;
+        private ObservableCollection<string> _steps;
 
-        // List of ingredients for the recipe
-        public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
-
-        // List of steps for the recipe
-        public List<string> Steps { get; set; } = new List<string>();
-
-        // Property to calculate the total calories of the recipe
-        public int TotalCalories
+        public string Name
         {
-            get
-            {
-                int total = 0;
-                foreach (var ingredient in Ingredients)
-                {
-                    total += ingredient.Calories;
-                }
-                return total;
-            }
+            get => _name;
+            set { _name = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<Ingredient> Ingredients
+        {
+            get => _ingredients;
+            set { _ingredients = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<string> Steps
+        {
+            get => _steps;
+            set { _steps = value; OnPropertyChanged(); }
+        }
+
+        public Recipe()
+        {
+            Ingredients = new ObservableCollection<Ingredient>();
+            Steps = new ObservableCollection<string>();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }
+    
+

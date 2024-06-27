@@ -1,14 +1,54 @@
-﻿namespace RecipeApp.Models
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace RecipeApp.Models
 {
-    /// <summary>
-    /// Represents an ingredient in a recipe.
-    /// </summary>
-    public class Ingredient
+    public class Ingredient : INotifyPropertyChanged
     {
-        public string Name { get; set; }        // Name of the ingredient
-        public double Quantity { get; set; }    // Quantity of the ingredient
-        public string Unit { get; set; }        // Unit of measurement (e.g., grams, cups)
-        public int Calories { get; set; }       // Number of calories in the ingredient
-        public string FoodGroup { get; set; }   // Food group the ingredient belongs to (e.g., Protein, Carbohydrate)
+        private string _name;
+        private double _quantity;
+        private string _unit;
+        private double _calories;
+        private string _foodGroup;
+
+        public string Name
+        {
+            get => _name;
+            set { _name = value; OnPropertyChanged(); }
+        }
+
+        public double Quantity
+        {
+            get => _quantity;
+            set { _quantity = value; OnPropertyChanged(); }
+        }
+
+        public string Unit
+        {
+            get => _unit;
+            set { _unit = value; OnPropertyChanged(); }
+        }
+
+        public double Calories
+        {
+            get => _calories;
+            set { _calories = value; OnPropertyChanged(); }
+        }
+
+        public string FoodGroup
+        {
+            get => _foodGroup;
+            set { _foodGroup = value; OnPropertyChanged(); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
     }
+
 }
+

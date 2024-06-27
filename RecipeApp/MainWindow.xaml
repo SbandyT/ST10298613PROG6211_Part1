@@ -6,9 +6,9 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         Title="Recipe Manager" Height="450" Width="800">
     <Window.DataContext>
-        <vm:BaseViewModel/>
+        <vm:RecipeViewModel/>
     </Window.DataContext>
-    <Grid>
+    <Grid Margin="0,0,0,-16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -21,7 +21,7 @@
         <!-- Recipe List Section -->
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="10">
             <TextBlock Text="Recipes" FontWeight="Bold" FontSize="16"/>
-            <ListBox ItemsSource="{Binding Recipes}" SelectedItem="{Binding SelectedRecipe}" DisplayMemberPath="Name" Margin="0,10,0,10"/>
+            <ListBox ItemsSource="{Binding Recipes}" SelectedItem="{Binding SelectedRecipe}" DisplayMemberPath="Name" Margin="0,10,0,10" Height="30"/>
             <Button Content="Add Recipe" Command="{Binding AddRecipeCommand}" Margin="0,5,0,0"/>
             <Button Content="Remove Recipe" Command="{Binding RemoveRecipeCommand}" Margin="0,5,0,0"/>
         </StackPanel>
@@ -29,28 +29,28 @@
         <!-- Recipe Details Section -->
         <StackPanel Grid.Row="0" Grid.Column="1" Margin="10">
             <TextBlock Text="Recipe Details" FontWeight="Bold" FontSize="16"/>
-            <TextBox Text="{Binding SelectedRecipe.Name, Mode=TwoWay}" Margin="0,10,0,10" ToolTip="Recipe Name"/>
+            <TextBox Text="{Binding SelectedRecipe.Name, Mode=TwoWay}" Margin="0,10,0,10" ToolTip="Recipe Name" Height="20"/>
             <TextBlock Text="Ingredients" FontWeight="Bold" FontSize="14"/>
-            <ListBox ItemsSource="{Binding SelectedRecipe.Ingredients}" Margin="0,5,0,10">
+            <ListBox ItemsSource="{Binding SelectedRecipe.Ingredients}" Margin="0,5,0,10" Height="30">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox Text="{Binding Path=Name, Mode=TwoWay}" Width="100" Margin="0,0,5,0"/>
-                            <TextBox Text="{Binding Path=Quantity, Mode=TwoWay}" Width="50" Margin="0,0,5,0"/>
-                            <TextBox Text="{Binding Path=Unit, Mode=TwoWay}" Width="50" Margin="0,0,5,0"/>
-                            <TextBox Text="{Binding Path=Calories, Mode=TwoWay}" Width="50" Margin="0,0,5,0"/>
-                            <TextBox Text="{Binding Path=FoodGroup, Mode=TwoWay}" Width="100" Margin="0,0,5,0"/>
+                            <TextBox Text="{Binding Name, Mode=TwoWay}" Width="20" Margin="0,0,5,0"/>
+                            <TextBox Text="{Binding Quantity, Mode=TwoWay}" Width="20" Margin="0,0,5,0"/>
+                            <TextBox Text="{Binding Unit, Mode=TwoWay}" Width="30" Margin="0,0,5,0"/>
+                            <TextBox Text="{Binding Calories, Mode=TwoWay}" Width="50" Margin="0,0,5,0"/>
+                            <TextBox Text="{Binding FoodGroup, Mode=TwoWay}" Width="50" Margin="0,0,5,0"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
             <TextBlock Text="Steps" FontWeight="Bold" FontSize="14"/>
-            <ListBox ItemsSource="{Binding SelectedRecipe.Steps}" Margin="0,5,0,10">
+            <ListBox ItemsSource="{Binding SelectedRecipe.Steps}" Margin="0,5,0,10" Height="30">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <CheckBox/>
-                            <TextBox Text="{Binding Path=.}" Margin="5,0,0,0"/>
+                            <TextBox Text="{Binding ., Mode=TwoWay}" Margin="5,0,0,0"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -59,7 +59,8 @@
 
         <!-- Pie Chart Section -->
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10">
-            <oxy:PlotView Model="{Binding FoodGroupPieModel}" Height="200"/>
+            <oxy:PlotView Model="{Binding FoodGroupPieModel}" Height="191" RenderTransformOrigin="0.489,0.555" Width="779"/>
         </StackPanel>
     </Grid>
 </Window>
+
