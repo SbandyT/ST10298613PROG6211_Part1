@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeAppTestUnits", "Recip
 		{D6D6634E-4BA3-41A3-8CF8-79A3FB99C3EB} = {D6D6634E-4BA3-41A3-8CF8-79A3FB99C3EB}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeApp", "..\RecipeApp\RecipeApp.csproj", "{E8D33D41-956C-4FE1-A6C8-CCB723DFFF25}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeApp", "RecipeApp\RecipeApp.csproj", "{60341C47-180E-440C-9CE7-54F9A5283D0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +26,10 @@ Global
 		{EFD6037A-B56F-4A72-A6FF-5408DC7DCFD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFD6037A-B56F-4A72-A6FF-5408DC7DCFD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFD6037A-B56F-4A72-A6FF-5408DC7DCFD2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8D33D41-956C-4FE1-A6C8-CCB723DFFF25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8D33D41-956C-4FE1-A6C8-CCB723DFFF25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8D33D41-956C-4FE1-A6C8-CCB723DFFF25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8D33D41-956C-4FE1-A6C8-CCB723DFFF25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60341C47-180E-440C-9CE7-54F9A5283D0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60341C47-180E-440C-9CE7-54F9A5283D0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60341C47-180E-440C-9CE7-54F9A5283D0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60341C47-180E-440C-9CE7-54F9A5283D0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
